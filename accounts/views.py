@@ -18,7 +18,9 @@ def home(request):
     
     pending = orders.filter(status = 'PENDING').count()
 
-    context = {'orders': orders, 'customers': customers, 'total_orders': total_orders, 'delivered': delivered, 'pending': pending}
+    ofd = orders.filter(status = 'Out for delivery').count()
+
+    context = {'orders': orders, 'customers': customers, 'total_orders': total_orders, 'delivered': delivered, 'pending': pending, 'ofd': ofd}
 
     return render(request,'accounts/dashboard.html', context)
 
