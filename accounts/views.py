@@ -8,7 +8,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth import authenticate, login, logout
 from matplotlib.style import context
 from .models import *
-from .forms import OrderForm, CreateUserForm
+from .forms import OrderForm, CreateUserForm, Customerform
 from .filters import OrderFilter
 from .decorators import unauthenticated_user, allowed_users, admin_only
 
@@ -105,6 +105,14 @@ def userPage(request):
     return render(request,'accounts/user.html',context)
 
 @login_required(login_url='login')
+@allowed_users(allowed_roles=['admin', 'customer'])
+def accountSettings(request):
+    customer = Customers.objects.get(user = request.user)
+    form = Customerform(instance = customer)
+    context = {'form': form}
+    return render(request,'accounts/account_settings.html', context)
+
+@login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
 def createOrder(request, pk):
     OrderFormSet = inlineformset_factory(Customers, Order, fields=('product','status'), extra=10)
@@ -147,3 +155,4 @@ def deleteOrder(request, pk):
         return redirect('/')
     context = {'item': order}
     return render(request,'accounts/delete.html', context)
+
