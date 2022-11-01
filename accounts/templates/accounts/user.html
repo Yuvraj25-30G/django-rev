@@ -4,5 +4,29 @@
 
 {% include 'accounts/status.html' %}
 
-<h1>User Profile</h1>
+<div class="row">
+    <div class="col-md">
+      <div class="card card-body">
+        <table class="table table-sm">
+          <tr>
+            <th>Product</th>
+            <th>Category</th>
+            <th>Date Orderd</th>
+            <th>Note</th>
+            <th>Status</th>
+          </tr>
+          {% for order in orders %}
+            <tr>
+              <td>{{order.product}}</td>
+              <td>{{order.product.category}}</td>
+              <td>{{order.date_created}}</td>
+              <td>{{order.notes}}</td>
+              <td>{{order.status}}</td>
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+  </div>
+
 {% endblock content %}

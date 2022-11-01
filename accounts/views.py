@@ -24,6 +24,7 @@ def register(request):
 
             group = Group.objects.get(name='customer')
             user.groups.add(group)
+            Customers.objects.create(user=user)
 
             messages.success(request, username + ' Created successfully')
             return redirect('login')
@@ -94,6 +95,14 @@ def customer(request, pk_test):
     context = {'customer': customer, 'orders': orders, 'order_count': orders_count, 'myFilter': myFilter}
     return render(request,'accounts/customer.html', context)
 
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['customer','admin'])
+def userPage(request):
+    # orders = request.user.customer.order_set.all()
+    customer =Customers.objects.get(user=request.user)
+    orders = customer.order_set.all()
+    context = {'orders': orders}
+    return render(request,'accounts/user.html',context)
 
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['admin'])
@@ -138,11 +147,3 @@ def deleteOrder(request, pk):
         return redirect('/')
     context = {'item': order}
     return render(request,'accounts/delete.html', context)
-
-
-
-@login_required(login_url='login')
-def userPage(request):
-
-    context = {}
-    return render(request,'accounts/user.html', context)
