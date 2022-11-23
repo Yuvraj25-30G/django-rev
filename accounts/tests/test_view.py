@@ -27,3 +27,11 @@ class TestRegister(BaseTest):
         response = self.client.post(self.register_url,self.user,format='text/html')
         self.assertEqual(response.status_code, 200)
         print("running2")
+
+    '''
+        Other test cases covered in frontend 
+        1. user creation with invalid email address
+        2. user creation with unmatching passwords
+        3. user creation with short passwords
+        4. link to login page if the user is already registered
+    '''
