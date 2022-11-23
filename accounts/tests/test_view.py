@@ -30,8 +30,8 @@ class TestRegister(BaseTest):
 
     '''
         Other test cases covered in frontend 
-        1. user creation with invalid email address
-        2. user creation with unmatching passwords
-        3. user creation with short passwords
-        4. link to login page if the user is already registered
+        4. user creation with invalid email address
+        5. user creation with unmatching passwords
+        6. user creation with short passwords
+        7. link to login page if the user is already registered
     '''
